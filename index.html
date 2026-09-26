@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pastel To-Do List</title>
+
+  <!-- Google Fonts: Plus Jakarta Sans for modern, clean typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Tailwind Configuration for Soft Pastel Colors -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            pastel: {
+              lavender: '#8B5CF6',
+              purpleBg: '#F3E8FF',
+              pinkBg: '#FCE7F3',
+              blueBg: '#E0F2FE',
+              mintBg: '#DCFCE7',
+              peachBg: '#FFEDD5',
+              cardBorder: '#E9D5FF',
+            }
+          },
+          boxShadow: {
+            'soft': '0 10px 30px -5px rgba(139, 92, 246, 0.08), 0 4px 12px -2px rgba(139, 92, 246, 0.05)',
+            'soft-card': '0 4px 20px -2px rgba(139, 92, 246, 0.06)',
+            'soft-hover': '0 8px 25px -4px rgba(139, 92, 246, 0.12)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Additional Custom CSS for subtle animations -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gradient-to-br from-[#F5F3FF] via-[#FDF2F8] to-[#EFF6FF] min-h-screen text-slate-700 font-sans antialiased flex flex-col justify-between p-4 sm:p-6 md:p-10 selection:bg-purple-200">
+
+  <!-- Main Container -->
+  <div class="w-full max-w-lg mx-auto my-auto">
+    
+    <!-- App Card -->
+    <div class="bg-white/85 backdrop-blur-xl rounded-3xl p-6 sm:p-8 shadow-soft border border-white/80">
+      
+      <!-- Header Section -->
+      <header class="mb-6">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <!-- Pastel Icon Badge -->
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 text-purple-600 flex items-center justify-center shadow-inner">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+            </div>
+            <div>
+              <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Daily Tasks</h1>
+              <p class="text-xs sm:text-sm text-slate-500 font-medium" id="current-date">Today's Focus</p>
+            </div>
+          </div>
+
+          <!-- Task Counter Badge -->
+          <div id="stats-badge" class="px-3.5 py-1.5 rounded-full bg-purple-50 text-purple-700 text-xs font-semibold border border-purple-100/80 shadow-sm flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+            <span id="stats-text">0 / 0 done</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Input Form Section -->
+      <section class="mb-6">
+        <form id="todo-form" class="flex flex-col sm:flex-row gap-2.5">
+          <!-- Text Input -->
+          <div class="relative flex-grow">
+            <input 
+              type="text" 
+              id="task-input" 
+              placeholder="What do you need to do?" 
+              autocomplete="off"
+              class="w-full px-4 py-3.5 bg-slate-50/80 border border-slate-200/80 rounded-2xl text-slate-700 text-sm placeholder-slate-400 focus:outline-none focus:border-purple-300 focus:bg-white focus:ring-4 focus:ring-purple-100 transition-all duration-200 shadow-sm"
+            >
+          </div>
+
+          <!-- Add Button -->
+          <button 
+            type="submit" 
+            id="add-task-btn"
+            class="px-5 py-3.5 bg-gradient-to-r from-purple-400 via-purple-500 to-indigo-400 hover:from-purple-500 hover:to-indigo-500 text-white text-sm font-semibold rounded-2xl shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>Add</span>
+          </button>
+        </form>
+
+        <!-- Subtle Feedback / Error Note (Hidden by default) -->
+        <p id="error-message" class="text-xs text-rose-500 font-medium mt-1.5 ml-2 hidden">
+          * Please enter a task first!
+        </p>
+      </section>
+
+      <!-- Task List Container -->
+      <section>
+        <ul id="task-list" class="space-y-2.5 max-h-[380px] overflow-y-auto pr-1">
+          <!-- Tasks will be inserted here dynamically by JavaScript -->
+        </ul>
+
+        <!-- Empty State (Shown when there are no tasks) -->
+        <div id="empty-state" class="text-center py-10 px-4">
+          <div class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-purple-50/60 border border-purple-100 flex items-center justify-center text-purple-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-slate-700">No tasks yet!</h3>
+          <p class="text-xs text-slate-400 mt-1 max-w-xs mx-auto">Add your first task above to start your productive day with a smile.</p>
+        </div>
+      </section>
+
+      <!-- Footer Info / Clear All -->
+      <div id="footer-actions" class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400 hidden">
+        <span id="remaining-count">0 items remaining</span>
+        <button id="clear-completed-btn" class="hover:text-rose-500 font-medium transition-colors duration-150">
+          Clear completed
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Quick Footer Note -->
+    <p class="text-center text-xs text-slate-400 mt-5">
+      Simple & Pastel To-Do List &bull; Built with Vanilla JavaScript & Tailwind
+    </p>
+
+  </div>
+
+  <!-- JavaScript File -->
+  <script src="app.js"></script>
+</body>
+</html>

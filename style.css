@@ -1,0 +1,82 @@
+/* ============================================================
+   Custom Pastel Styles & Animations
+   Complements Tailwind CSS with smooth transitions and details
+   ============================================================ */
+
+/* Custom subtle scrollbar for the task list */
+#task-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+#task-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#task-list::-webkit-scrollbar-thumb {
+  background-color: #E2E8F0;
+  border-radius: 9999px;
+}
+
+#task-list::-webkit-scrollbar-thumb:hover {
+  background-color: #CBD5E1;
+}
+
+/* Smooth fade-in animation when a new task is added */
+@keyframes taskSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.task-animate-in {
+  animation: taskSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Strikethrough smooth transition */
+.task-title {
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+/* Checkbox custom soft pastel accent */
+.pastel-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1.8px solid #CBD5E1;
+  border-radius: 0.5rem;
+  outline: none;
+  cursor: pointer;
+  display: inline-grid;
+  place-content: center;
+  transition: all 0.2s ease;
+  background-color: #FFFFFF;
+}
+
+.pastel-checkbox:hover {
+  border-color: #A855F7;
+  background-color: #FAF5FF;
+}
+
+.pastel-checkbox:checked {
+  background-color: #A855F7;
+  border-color: #A855F7;
+}
+
+.pastel-checkbox:checked::before {
+  content: "";
+  width: 0.65rem;
+  height: 0.4rem;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+
+.pastel-checkbox:focus-visible {
+  box-shadow: 0 0 0 3px #F3E8FF;
+}
