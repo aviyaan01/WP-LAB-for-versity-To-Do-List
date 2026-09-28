@@ -4,20 +4,24 @@ A modern, clean, and aesthetically pleasing To-Do List web application built wit
 
 ---
 
-## 🎨 Features & Design Highlights
+## 🎨 Features & Highlights
 
-- **Soft Pastel Aesthetics**: Gentle lavender, purple, and slate palette with soft diffused drop shadows and rounded corners (`rounded-3xl` container, `rounded-2xl` task cards).
+- **Soft Pastel Aesthetics**: Gentle lavender, purple, and slate palette with soft diffused drop shadows and rounded cards (`rounded-3xl` container, `rounded-2xl` task cards).
 - **Task Management**:
   - Add tasks via the input field and button (or by pressing **Enter**).
   - Mark tasks as completed using custom styled checkboxes (triggers strikethrough styling and soft mute).
   - Delete individual tasks with a sleek trash icon button.
   - "Clear completed" option to quickly clean up finished tasks.
+- **Smart Per-Task Alarm & Audio Reminders**:
+  - Set specific alarm times directly on any individual task item (`<input type="time">`).
+  - Native **10-second mobile digital beep** synthesized using browser **Web Audio API** (zero MP3 dependencies).
+  - Prominent **"Stop Alarm"** modal button to silence the audio and dismiss the reminder immediately.
 - **Dynamic Stats & Date**:
-  - Shows today's formatted date automatically (e.g., *Saturday, Sep 26*).
+  - Shows today's formatted date automatically (e.g., *Monday, Sep 28*).
   - Live progress counter badge showing how many tasks are done (e.g., `2 / 5 done`).
   - Friendly empty state illustration when no tasks are present.
 - **Persistent Storage**:
-  - Uses browser `localStorage` so tasks remain saved even if the browser is closed or refreshed.
+  - Uses browser `localStorage` so tasks and alarm settings remain saved across browser reloads or restarts.
 
 ---
 

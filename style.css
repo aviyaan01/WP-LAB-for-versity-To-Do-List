@@ -80,3 +80,38 @@
 .pastel-checkbox:focus-visible {
   box-shadow: 0 0 0 3px #F3E8FF;
 }
+
+/* Alarm Modal Entrance Animation */
+@keyframes modalPop {
+  0% {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+#alarm-modal > div {
+  animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Time Picker inside Task Row */
+.task-time-picker {
+  font-family: inherit;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  max-width: 82px;
+}
+
+.task-time-picker::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+  margin-left: 2px;
+}
+
+.task-time-picker::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
